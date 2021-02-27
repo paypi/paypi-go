@@ -10,9 +10,21 @@ import (
 	"time"
 )
 
-var (
-	API_URL string = "http://localhost:8080/graphql"
-)
+type GqlClient interface {
+	MakeRequest(query GqlQuery, respData interface{}) error
+}
+
+type gqlClientImpl struct {
+	HttpClient http.Client
+	ApiUrl     string
+}
+
+func New(apiUrl string) GqlClient {
+	return gqlClientImpl{
+		ApiUrl:     apiUrl,
+		HttpClient: http.Client{Timeout: time.Second * 5},
+	}
+}
 
 type Response struct {
 	Data   interface{}
@@ -30,16 +42,15 @@ type GqlQuery struct {
 	Variables map[string]interface{}
 }
 
-func MakeRequest(query GqlQuery, respData interface{}) error {
+func (g gqlClientImpl) MakeRequest(query GqlQuery, respData interface{}) error {
 	jsonData := map[string]interface{}{
 		"query":     query.Query,
 		"variables": query.Variables,
 	}
 	jsonValue, _ := json.Marshal(jsonData)
-	request, err := http.NewRequest("POST", API_URL, bytes.NewBuffer(jsonValue))
-	client := &http.Client{Timeout: time.Second * 3}
+	request, err := http.NewRequest("POST", g.ApiUrl, bytes.NewBuffer(jsonValue))
 
-	response, err := client.Do(request)
+	response, err := g.HttpClient.Do(request)
 	defer response.Body.Close()
 	if err != nil {
 		fmt.Printf("The HTTP request failed with error %s\n", err)
