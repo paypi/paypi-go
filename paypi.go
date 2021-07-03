@@ -1,6 +1,7 @@
 package paypi
 
 import (
+	"errors"
 	"fmt"
 
 	"github.com/Paypi/paypi-go/gql"
@@ -8,13 +9,16 @@ import (
 
 var (
 	//Key is the API secret Key
-	Key string
-	// GqlClient is the graphql client to use
+	Key       string
 	GqlClient gql.GqlClient
 )
 
 func init() {
-	GqlClient = gql.New("http://localhost:8080/graphql")
+	GqlClient = gql.New("https://api.paypi.dev")
+}
+
+func SetConnection(url string) {
+	GqlClient = gql.New(url)
 }
 
 type CheckSubscriberSecretResponse struct {
@@ -32,6 +36,9 @@ type AuthenticatedOutput struct {
 // card details setup on their account to make payments.
 func Authenticate(clientToken string) (AuthenticatedOutput, error) {
 	// Send request to API to authenticate clientToken
+	if Key == "" {
+		return AuthenticatedOutput{}, errors.New("paypi.Key is not set")
+	}
 
 	resp := CheckSubscriberSecretResponse{}
 
@@ -72,7 +79,7 @@ type MakeChargeResponse struct {
 
 type MakeChargeInput struct {
 	ChargeIdentifier string
-	UnitsUsed        float64
+	UnitsUsed        int32
 }
 
 type MakeChargeOutput struct {
@@ -84,13 +91,13 @@ type MakeChargeOutput struct {
 func (a AuthenticatedOutput) MakeCharge(input MakeChargeInput) (MakeChargeOutput, error) {
 	resp := MakeChargeResponse{}
 
-	var unitsUsed float64
+	var unitsUsed int32
 	if input.UnitsUsed != 0 {
 		unitsUsed = input.UnitsUsed
 	}
 	err := GqlClient.MakeRequest(gql.GqlQuery{
 		Query: `
-			mutation MakeCharge($chargeIdent: String!, $subSecret: String!, $unitsUsed: Float) {
+			mutation MakeCharge($chargeIdent: String!, $subSecret: String!, $unitsUsed: Int) {
 					makeCharge(input: {
 						chargeIdentifier: $chargeIdent
 						subscriptionSecret: $subSecret
