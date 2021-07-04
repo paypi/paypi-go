@@ -13,7 +13,7 @@ import (
 or explicitly fetch with `go get`
 
 ```go
-go get -u github.com/Paypi/paypi-go/paypi
+go get github.com/Paypi/paypi-go
 ```
 
 
