@@ -3,7 +3,7 @@
 package mocks
 
 import (
-	gql "github.com/Paypi/paypi-go/gql"
+	gql "github.com/paypi/paypi-go/gql"
 	mock "github.com/stretchr/testify/mock"
 )
 

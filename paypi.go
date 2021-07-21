@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/Paypi/paypi-go/gql"
+	"github.com/paypi/paypi-go/gql"
 )
 
 var (

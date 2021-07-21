@@ -7,9 +7,9 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 
-	"github.com/Paypi/paypi-go/gql/mocks"
+	"github.com/paypi/paypi-go/gql/mocks"
 
-	"github.com/Paypi/paypi-go"
+	"github.com/paypi/paypi-go"
 )
 
 func TestAuthenticate(t *testing.T) {
