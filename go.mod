@@ -1,4 +1,4 @@
-module github.com/Paypi/paypi-go
+module github.com/paypi/paypi-go
 
 go 1.13
 
