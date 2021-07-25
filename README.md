@@ -224,5 +224,5 @@ Project Link: [https://github.com/paypi/paypi-go](https://github.com/paypi/paypi
 [issues-shield]: https://img.shields.io/github/issues/Paypi/paypi-go.svg?style=flat-square
 [issues-url]: https://github.com/paypi/paypi-go/issues
 [license-shield]: https://img.shields.io/github/license/Paypi/paypi-go.svg?style=flat-square
-[license-url]: https://github.com/paypi/paypi-go/blob/master/LICENSE.txt
+[license-url]: https://github.com/paypi/paypi-go/blob/master/LICENSE
 [product-screenshot]: images/product.png
