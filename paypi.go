@@ -14,7 +14,7 @@ var (
 )
 
 func init() {
-	GqlClient = gql.New("https://api.paypi.dev")
+	GqlClient = gql.New("https://api.paypi.dev/graphql")
 }
 
 func SetConnection(url string) {
