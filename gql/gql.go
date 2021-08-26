@@ -47,14 +47,25 @@ func (g gqlClientImpl) MakeRequest(query GqlQuery, respData interface{}) error {
 		"query":     query.Query,
 		"variables": query.Variables,
 	}
-	jsonValue, _ := json.Marshal(jsonData)
+	jsonValue, err := json.Marshal(jsonData)
+	if err != nil {
+		fmt.Printf("Unable to marshal JSON %s\n", err)
+		return err
+	}
+
 	request, err := http.NewRequest("POST", g.ApiUrl, bytes.NewBuffer(jsonValue))
+	if err != nil {
+		fmt.Printf("Request Error: %s\n", err)
+		return err
+	}
 
 	response, err := g.HttpClient.Do(request)
-	defer response.Body.Close()
 	if err != nil {
 		fmt.Printf("The HTTP request failed with error %s\n", err)
+		return err
 	}
+	defer response.Body.Close()
+
 	data, _ := ioutil.ReadAll(response.Body)
 
 	resp := Response{}
