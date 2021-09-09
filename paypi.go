@@ -37,7 +37,7 @@ type AuthenticatedOutput struct {
 func Authenticate(clientToken string) (AuthenticatedOutput, error) {
 	// Send request to API to authenticate clientToken
 	if Key == "" {
-		return AuthenticatedOutput{}, errors.New("paypi.Key is not set")
+		return AuthenticatedOutput{}, errors.New("paypi.Key is not set. Set the key and try again")
 	}
 
 	resp := CheckSubscriberSecretResponse{}

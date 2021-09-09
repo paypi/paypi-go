@@ -5,6 +5,6 @@ import (
 )
 
 var (
-	ErrInvalidToken       error = errors.New("Token is invalid or disallowed")
-	ErrUnableToMakeCharge error = errors.New("Unable to make charge")
+	ErrInvalidToken       error = errors.New("paypi: subscriber key is invalid, deny this request")
+	ErrUnableToMakeCharge error = errors.New("paypi: unable to make charge, deny this request")
 )
